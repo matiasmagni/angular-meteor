@@ -1,67 +1,28 @@
-<a href="https://angular-meteor.com/"><img src="https://s22.postimg.org/vpn3d97ch/logo_large.png" width="60" height="60" /></a>  [![Join the chat at https://gitter.im/Urigo/angular-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Urigo/angular-meteor)
+# Angular Meteor Universal w/ AOT
+This project shows the usage of *@angular/platform-server* and *@angular/compiler-cli* with *Meteor*
 
-### [Angular-Meteor Compilers](https://github.com/Urigo/angular-meteor/tree/master/atmosphere-packages) [![Build Status](https://travis-ci.org/Urigo/angular-meteor.svg?branch=master)](https://travis-ci.org/Urigo/angular-meteor)
+ - Dynamic import without AOT is in dynamic-import branch
 
-### [meteor-rxjs - The Angular Meteor Data solution](https://github.com/Urigo/meteor-rxjs) [![npm version](https://badge.fury.io/js/meteor-rxjs.svg)](https://badge.fury.io/js/meteor-rxjs) [![Build Status](https://travis-ci.org/Urigo/meteor-rxjs.svg?branch=master)](https://travis-ci.org/Urigo/meteor-rxjs)
+How AOT works?
+--
+- On both server and client, it loads AOT-compiled factories by using angular-compiler
 
-### [AngularJS-Meteor](https://github.com/Urigo/angular-meteor/tree/angular1) [![Build Status](https://travis-ci.org/Urigo/angular-meteor.svg?branch=angular1)](https://travis-ci.org/Urigo/angular-meteor)   [![npm version](https://badge.fury.io/js/angular-meteor.svg)](https://badge.fury.io/js/angular-meteor)
+How Universal works?
+--
+ -  renderModule(JIT) and renderModuleFactory(AOT) with Meteor's server-render
 
-#### The power of Meteor and the simplicity and eco-system of Angular
+How-to
+--
+ - Add `server-render` package into your project
+ - Move your Angular files into `imports/app`
+ - Create `ServerAppModule` in `server-app.module.ts` w/ importing `ServerModule` from `@angular/platform-server` and `AppModule` from `app.module` in `imports/app` folder
+ - Change `BrowserModule` in imports to `BrowserModule.withServerTransition({ appId: 'yourAppId' })`
+ - Write server bootstrap code into `server/main.ts` like in this example
+ - Run your project with command -> `AOT=1 meteor`
+ - You have Angular Meteor Universal w/ AOT !!!
+ - If you want to disable Universal in Development, you can do `Meteor.isProduction` check before `onPageLoad`
+ - If you want to disable AOT compilation, you can run Meteor w/o `AOT=1`
 
-[![ng-conf](https://img.youtube.com/vi/_mu6BWsnaPM/0.jpg)](https://www.youtube.com/watch?v=_mu6BWsnaPM)
-
-## Documentation and Getting Started
-- [Official website](https://www.angular-meteor.com)
-- [Angular Meteor Stickers](https://www.stickermule.com/marketplace/9686-angular-meteor-sticker)
-- [Getting started tutorial](https://angular-meteor.com/tutorials/whatsapp2-tutorial)
-- [Angular Example application with Ionic CLI](https://github.com/Urigo/Ionic2CLI-Meteor-WhatsApp) (Final version of the tutorial)
-- [Angular Example application with Meteor CLI](https://github.com/Urigo/Ionic2-MeteorCLI-WhatsApp) (Final version of the tutorial)
-- [AngularJS Example application with Ionic CLI](https://github.com/Urigo/IonicCLI-Meteor-WhatsApp) (Final version of the tutorial)
-- [AngularJS Example application with Meteor CLI](https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp) (Final version of the tutorial)
-- [More simplified examples](https://github.com/Urigo/angular-meteor/tree/master/examples)
-- Questions and help - [Stack Overflow `angular-meteor` tag](http://stackoverflow.com/questions/tagged/angular-meteor), [`angularjs-meteor` tag](http://stackoverflow.com/questions/tagged/angularjs-meteor)
-- [Join angular-meteor Office Hours](https://plus.google.com/events/cj8i93v7cabr9fab5jvv3r6bb80)
-- [Discussions - the Meteor Forum](https://forums.meteor.com/)
-- [Gitter](https://gitter.im/Urigo/angular-meteor)
-- [Report issues](https://github.com/Urigo/angular-meteor/issues)
-- [Change Log, updates and breaking changes](https://github.com/Urigo/angular-meteor/blob/master/CHANGELOG.md)
-- [Meteor Blog](https://info.meteor.com/blog)
-- [Official Meteor guide for best practices](http://guide.meteor.com/)
-- [Awesome Meteor](https://github.com/Urigo/awesome-meteor) - Curated, community driven list of Meteor resources
-- Starters - [Angular2-Meteor Base](https://github.com/bsliran/angular2-meteor-base), [angular1-meteor Yeoman generator](https://github.com/ndxbxrme/generator-angular-meteor)
-- Track Roadmap here: [angular-meteor milestones](https://github.com/Urigo/angular-meteor/milestones), [Meteor issues related to Angular](https://github.com/meteor/meteor/labels/Project%3AAngular)
-
-## Usage
-
-Go to the [official docs about Meteor-RxJS](https://angular-meteor.com/meteor-rxjs)
-
-## Tutorial
-
-If you are new to Angular and/or Meteor but want to learn them quickly, 
-please check out our 14-steps Angular-Meteor [tutorial](https://angular-meteor.com/tutorials/whatsapp2-tutorial).
-
-## Quick Start Using Angular-Meteor
-```
-   $ meteor create --example angular2-boilerplate myApp
-   $ cd myApp
-   $ meteor npm install
-```
-
-> Alternatively, use your web browser to access the link:
-> https://github.com/Urigo/angular2-meteor-base
-> Download the template application, and unzip the files inside.
-
-Then run:
-```
-   $ meteor
-```
-
-## Contributing
-
-Please read the contributing instructions at [the contributing page](https://github.com/Urigo/angular-meteor/blob/master/.github/CONTRIBUTING.md).
-
-### Acknowledgement
-
-This project started as [ngMeteor](https://github.com/loneleeandroo/ngMeteor), a pre-0.9 meteorite package. Since then a lot has changed but that was the main base.
-
-Also, a lot of features were inspired by @superchris's [angular-meteor fork of ngMeteor](https://github.com/superchris/angular-meteor).
+Known issues
+--
+  - Ionic w/ Universal doesn't work due to this issue - https://github.com/ionic-team/ionic/issues/10699 - You can use Angular Material instead!

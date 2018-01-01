@@ -1,4 +1,0 @@
-{
-  "extends": ["config:js-lib", ":meteor"],
-  "rebaseStalePrs": true
-}
